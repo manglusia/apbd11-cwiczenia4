@@ -6,15 +6,8 @@ namespace LegacyApp
     {
         public bool AddUser(string firstName, string lastName, string email, DateTime dateOfBirth, int clientId)
         {
-            if (string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName))
-            {
-                return false;
-            }
 
-            if (!email.Contains("@") && !email.Contains("."))
-            {
-                return false;
-            }
+            IsProcessable(firstName, lastName, email);
 
             var now = DateTime.Now;
             int age = now.Year - dateOfBirth.Year;
@@ -66,6 +59,21 @@ namespace LegacyApp
             }
 
             UserDataAccess.AddUser(user);
+            return true;
+        }
+
+        public bool IsProcessable(string firstName, string lastName, string email)
+        {
+            if (string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName))
+            {
+                return false;
+            }
+
+            if (!email.Contains("@") && !email.Contains("."))
+            {
+                return false;
+            }
+
             return true;
         }
     }
